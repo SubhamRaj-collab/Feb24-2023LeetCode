@@ -1,0 +1,40 @@
+class Solution {
+    public int minimumDeviation(int[] nums) {
+        
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+        int min = Integer.MAX_VALUE;
+
+        for(int num: nums)
+        {
+            if((num&1) == 1)
+            {
+                num *= 2;
+            }
+            pq.offer(num);
+            min = Math.min(min, num);
+        }
+
+        int minDeviation = Integer.MAX_VALUE;
+
+        while(true)
+        {
+            int num = pq.poll();
+            int diff = num-min;
+            minDeviation = Math.min(minDeviation, diff);
+
+            if((num&1) == 1)
+            {
+                break;
+            }
+            else 
+            {
+                num /= 2;
+                min = Math.min(num, min);
+                pq.offer(num);
+            }
+        }
+
+        return minDeviation;
+
+    }
+}
